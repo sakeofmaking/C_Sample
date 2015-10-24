@@ -33,13 +33,13 @@ char char_key[37] = { ' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'
 int main(){
     char encoded[] = ".... . .-.. .-.. --- / -.. .- .. .-.. -.-- / .--. .-. --- --. .-. .- -- -- . .-. / --. --- --- -.. / .-.. ..- -.-. -.- / --- -. / - .... . / -.-. .... .- .-.. .-.. . -. --. . ... / - --- -.. .- -.--";
     int count;
-    char temp[10];
+    char temp[100];
     int i;
     int j;
     int k;
-    int m;
+    int count2 = 0;
 
-    for(m = 0; m < 55; m++){
+    while(strcmp(encoded, "\0") != 0){
         /* count the number of characters in morse symbol of interest */
         /* ex. "...." has 4 characters */
         count = 0;
@@ -62,9 +62,16 @@ int main(){
             }
         }
     
-        /* shift encoded message by one morse symbol */
-        for(j = 0; j < strlen(encoded); j++){
-            encoded[j] = encoded[j + count + 1];
+        /* shift encoded message by one morse symbol if encoded != last symbol */
+        if(count != count2){
+            count2 = 0;
+            for(j = 0; j < strlen(encoded); j++){
+                encoded[j] = encoded[j + count + 1];
+                count2++;
+            }
+            encoded[j] = ' ';
+        } else{
+            strcpy(encoded, "\0");
         }
     }
     
