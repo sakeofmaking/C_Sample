@@ -6,7 +6,7 @@
  * Purpose: Write a program that can translate Morse code in the format of ...---...
  * A space and a slash will be placed between words. ..- / --.-
  *
- * Bonus:Add the capability of going from a string to Morse code.
+ * Bonus: Add the capability of going from a string to Morse code.
  *
  * Super-bonus: if your program can flash or beep the Morse.
  *
@@ -37,27 +37,32 @@ int main(){
     int i;
     int j;
     int k;
-    
-    while(encoded[j] != '\0'){
+    int m;
+
+    for(m = 0; m < 55; m++){
+        /* count the number of characters in morse symbol of interest */
+        /* ex. "...." has 4 characters */
         count = 0;
         while(encoded[count] != ' '){
             count++;
         }
-        
-        /* what does this for loop do? */
+    
+        /* store morse symbol of interest in temp */
         for(k = 0; k < count; k++){
             temp[k] = encoded[k];
         }
         temp[k] = '\0';
-        
-        for(i = 0; i < 36; i++){
+    
+        /* compare morse symbol of interest against morse_key */
+        /* print corresponding char_key */
+        for(i = 0; i < 37; i++){
             if(strcmp(temp, morse_key[i]) == 0){
                 printf("%c", char_key[i]);
                 break;
             }
         }
-        
-        /* shift encoded message by one character */
+    
+        /* shift encoded message by one morse symbol */
         for(j = 0; j < strlen(encoded); j++){
             encoded[j] = encoded[j + count + 1];
         }
