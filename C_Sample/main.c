@@ -1,78 +1,44 @@
 /**********************************************************************
- * Title: Challenge 7 Morse Code
+ * Title: Challenge 11 Gaussian Algorithm
  *
- * Author
+ * Author: Nic La
  *
- * Purpose: Write a program that can translate Morse code in the format of ...---...
- * A space and a slash will be placed between words. ..- / --.-
+ * Purpose: The program should take three arguments. The first will be a day, 
+ * the second will be month, and the third will be year. Then, your program should 
+ * compute the day of the week that date will fall on.
  *
- * Bonus: Add the capability of going from a string to Morse code.
+ * Link: https://www.reddit.com/r/dailyprogrammer/comments/pwons/2192012_challenge_11_easy/
  *
- * Super-bonus: if your program can flash or beep the Morse.
- *
- * Example:
- * .... . .-.. .-.. --- / -.. .- .. .-.. -.-- / .--. .-. --- --. .-. .- -- -- . .-. /
- * --. --- --- -.. / .-.. ..- -.-. -.- / --- -. / - .... . / -.-. .... .- .-.. .-.. .
- * -. --. . ... / - --- -.. .- -.--
- *
- * Link: https://www.reddit.com/r/dailyprogrammer/comments/pr2xr/2152012_challenge_7_easy/
+ * Link: http://www.wikihow.com/Calculate-the-Day-of-the-Week
  *
  **********************************************************************/
 
 #include <stdio.h>
-#include <string.h>
 
-char morse_key[37][10] = { "/", ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--",
-    "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--..",
-    "-----", ".----", "..---", "...--", "....-", ".....", "-....", "--...", "---..", "----." };
-char char_key[37] = { ' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-
+int month_table[2][12] = {
+    {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12},
+    {0, 3, 3, 6, 1, 4, 6, 2, 5, 0, 3, 5}
+};
+int century_table[2][5] = {
+    {1600, 1700, 1800, 1900, 2000},
+    {0, 5, 3, 1, 0}
+};
+char day_table1[7][10] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+int day_table2[8] = {1, 2, 3, 4, 5, 6, 7, 0};
 
 int main(){
-    char encoded[] = ".... . .-.. .-.. --- / -.. .- .. .-.. -.-- / .--. .-. --- --. .-. .- -- -- . .-. / --. --- --- -.. / .-.. ..- -.-. -.- / --- -. / - .... . / -.-. .... .- .-.. .-.. . -. --. . ... / - --- -.. .- -.--";
-    int count;
-    char temp[100];
-    int i;
-    int j;
-    int k;
-    int count2 = 0;
-
-    while(strcmp(encoded, "\0") != 0){
-        /* count the number of characters in morse symbol of interest */
-        /* ex. "...." has 4 characters */
-        count = 0;
-        while(encoded[count] != ' '){
-            count++;
-        }
+    char line[100];
+    int month_in = 0;
+    int day_in = 0;
+    int year_in = 0;
     
-        /* store morse symbol of interest in temp */
-        for(k = 0; k < count; k++){
-            temp[k] = encoded[k];
-        }
-        temp[k] = '\0';
+    printf("Enter date (mm/dd/yyyy): ");
+    fgets(line, sizeof(line), stdin);
+    sscanf(line, "%d/%d/%d", &month_in, &day_in, &year_in);
     
-        /* compare morse symbol of interest against morse_key */
-        /* print corresponding char_key */
-        for(i = 0; i < 37; i++){
-            if(strcmp(temp, morse_key[i]) == 0){
-                printf("%c", char_key[i]);
-                break;
-            }
-        }
+#ifdef DEBUG
+    printf("mm/dd/yyyy = %d/%d/%d\n", month_in, day_in, year_in);
+#endif /* DEBUG */
     
-        /* shift encoded message by one morse symbol if encoded != last symbol */
-        if(count != count2){
-            count2 = 0;
-            for(j = 0; j < strlen(encoded); j++){
-                encoded[j] = encoded[j + count + 1];
-                count2++;
-            }
-            encoded[j] = ' ';
-        } else{
-            strcpy(encoded, "\0");
-        }
-    }
     
 }
