@@ -205,6 +205,7 @@
 		82BFE6EF1BD883400009D247 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"MTL_ENABLE_DEBUG_INFO[arch=*]" = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -235,6 +236,7 @@
 				82BFE6F01BD883400009D247 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
