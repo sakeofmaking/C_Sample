@@ -1,60 +1,41 @@
 /**********************************************************************
- * Title: Challenge 13 Day of the Year
+ * Title: Challenge 14
  *
  * Author: Nic La
  *
- * Purpose: Find the number of the year for the given date. For example, january 1st would be 1, and december 31st is 365.
- for extra credit, allow it to calculate leap years, as well.
+ * Purpose: Input: list of elements and a block size k or some other variable of your choice
+ * Output: return the list of elements with every block of k elements reversed, starting from the beginning of the list.
+ * For instance, given the list 12, 24, 32, 44, 55, 66 and the block size 2, the result is 24, 12, 44, 32, 66, 55.
  *
- * Link: https://www.reddit.com/r/dailyprogrammer/comments/pzo4w/2212012_challenge_13_easy/
+ * Link: https://www.reddit.com/r/dailyprogrammer/comments/q2v2k/2232012_challenge_14_easy/
  *
  **********************************************************************/
 
+
 #include <stdio.h>
-#include <stdbool.h>
+
+// fails if len is not evenly divisible by k
+void block_reversed(int block[],int len, int k){
+    int i, j;
+    int x = 0;
+    
+    for(j = 0; j < (len / k); j++){
+        for(i = k - 1; i >= 0; i--){
+            printf("[%d]", block[i + x]);
+        }
+        x += k;
+    }
+}
+
 
 int main()
 {
-    int days_month[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-    int day_in = 0;
-    int month_in = 0;
-    int year_in = 0;
-    char line[100];
-    int i;
-    int days_year = 0;
-    bool leap_year = 0;
-
-    // Ask for date
-    printf("Enter date (mm/dd/yyyy): ");
-    fgets(line, sizeof(line), stdin);
-    sscanf(line, "%d/%d/%d", &month_in, &day_in, &year_in);
+    int test_block[] = { 12, 24, 32, 44, 55, 66 };
+    int len = 6;
+    int k = 2;
     
-    // Determine if leap year
-    if((year_in % 4) == 0){
-        if((year_in % 100) == 0){
-            if((year_in % 400) == 0){
-                leap_year = 1;
-            } else{
-                leap_year = 0;
-            }
-        } else{
-            leap_year = 1;
-        }
-    } else{
-        leap_year = 0;
-    }
-    if(leap_year == 1){
-        days_month[1] = 29;
-    }
+    block_reversed(test_block,len, k);
     
-    // Count day of the year
-    for(i = 0; i < (month_in - 1); i++){
-        days_year += days_month[i];
-    }
-    days_year += day_in;
-    
-    
-    printf("Day of the year = %d\n", days_year);
 }
 
 
