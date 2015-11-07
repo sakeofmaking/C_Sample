@@ -1,46 +1,53 @@
 /**********************************************************************
- * Title: Challenge 14
+ * Title: Challenge 15: Right or Left Justify
  *
  * Author: Nic La
  *
- * Purpose: Input: list of elements and a block size k or some other variable of your choice
- * Output: return the list of elements with every block of k elements reversed, starting from the beginning of the list.
- * For instance, given the list 12, 24, 32, 44, 55, 66 and the block size 2, the result is 24, 12, 44, 32, 66, 55.
- *
- * Link: https://www.reddit.com/r/dailyprogrammer/comments/q2v2k/2232012_challenge_14_easy/
+ * Purpose: Write a program to indent a text file
  *
  **********************************************************************/
 
 
 #include <stdio.h>
+#include <stdlib.h>
 
-// fails if len is not evenly divisible by k
-void block_reversed(int block[],int len, int k){
-    int i, j;
-    int x = 0;
+const char IN_FILE[] = "/Users/thinklem/Dropbox/Embedded Systems/C_Sample/C_Sample/input.txt";
+const char OUT_FILE[] = "/Users/thinklem/Dropbox/Embedded Systems/C_Sample/C_Sample/output.txt";
+
+int main(){
+    char line[100];                 /* store one line of file */
+    FILE *in_file_ptr;              /* input file */
+    FILE *out_file_ptr;             /* output file */
     
-    for(j = 0; j < (len / k); j++){
-        for(i = k - 1; i >= 0; i--){
-            printf("[%d]", block[i + x]);
-        }
-        x += k;
+    /* open input file for reading */
+    in_file_ptr = fopen(IN_FILE, "r");
+    if(in_file_ptr == NULL) {
+        printf("Cannot open %s\n", IN_FILE);
+        fclose(in_file_ptr);
+        exit(8);
     }
-}
-
-
-int main()
-{
-    int test_block[] = { 12, 24, 32, 44, 55, 66 };
-    int len = 6;
-    int k = 2;
     
-    block_reversed(test_block,len, k);
+    /* open output file for writing */
+    out_file_ptr = fopen(OUT_FILE, "w");
+    if(out_file_ptr == NULL) {
+        printf("Cannot open %s\n", OUT_FILE);
+        fclose(out_file_ptr);
+        exit(8);
+    }
     
+    /* indent and copy input to output */
+    while(fgets(line, sizeof(line), in_file_ptr)){
+        
+        fprintf(out_file_ptr, "\t%s", line);
+
+    }
+    
+    fclose(in_file_ptr);
+    fclose(out_file_ptr);
+    
+    
+    return(0);
 }
-
-
-
-
 
 
 
