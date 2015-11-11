@@ -1,53 +1,69 @@
 /**********************************************************************
- * Title: Challenge 15: Right or Left Justify
+ * Title: Challenge 16: String Subtraction
  *
  * Author: Nic La
  *
- * Purpose: Write a program to indent a text file
+ * Purpose: Write a function that takes two strings and removes from the 
+ * first string any character that appears in the second string. For instance, 
+ * if the first string is “Daily Programmer” and the second string is “aeiou ” 
+ * the result is “DlyPrgrmmr”.
+ * note: the second string has [space] so the space between "Daily Programmer" is removed
+ *
+ * Link: https://www.reddit.com/r/dailyprogrammer/comments/q8aom/2272012_challenge_16_easy/
  *
  **********************************************************************/
 
 
 #include <stdio.h>
-#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
 
-const char IN_FILE[] = "/Users/thinklem/Dropbox/Embedded Systems/C_Sample/C_Sample/input.txt";
-const char OUT_FILE[] = "/Users/thinklem/Dropbox/Embedded Systems/C_Sample/C_Sample/output.txt";
-
-int main(){
-    char line[100];                 /* store one line of file */
-    FILE *in_file_ptr;              /* input file */
-    FILE *out_file_ptr;             /* output file */
+void *minus(char *string1_ptr, char *string2_ptr){
+    int count1 = (int)strlen(string1_ptr);
+    int count2 = (int)strlen(string2_ptr);
+    bool match;
     
-    /* open input file for reading */
-    in_file_ptr = fopen(IN_FILE, "r");
-    if(in_file_ptr == NULL) {
-        printf("Cannot open %s\n", IN_FILE);
-        fclose(in_file_ptr);
-        exit(8);
+    for(string1_ptr = &string1_ptr[0]; string1_ptr < &string1_ptr[strlen(string1_ptr)]; string1_ptr++){
+        match = 0;
+        for(string2_ptr = &string2_ptr[0]; string2_ptr < &string2_ptr[strlen(string2_ptr)]; string2_ptr++){
+            if(*string1_ptr == *string2_ptr){
+                match = 1;
+            }
+        }
+        string2_ptr -= count2;
+        if(match == 0){
+            printf("%c", *string1_ptr);
+        }
     }
-    
-    /* open output file for writing */
-    out_file_ptr = fopen(OUT_FILE, "w");
-    if(out_file_ptr == NULL) {
-        printf("Cannot open %s\n", OUT_FILE);
-        fclose(out_file_ptr);
-        exit(8);
-    }
-    
-    /* indent and copy input to output */
-    while(fgets(line, sizeof(line), in_file_ptr)){
-        
-        fprintf(out_file_ptr, "\t%s", line);
-
-    }
-    
-    fclose(in_file_ptr);
-    fclose(out_file_ptr);
-    
+    string1_ptr -= count1;
     
     return(0);
 }
+
+
+int main(){
+    char string1[100];
+    char string2[100];
+    
+    printf("Enter string 1: ");
+    fgets(string1, sizeof(string1), stdin);
+    string1[strlen(string1) - 1] = '\0';
+    
+    printf("Enter string 2: ");
+    fgets(string2, sizeof(string2), stdin);
+    string2[strlen(string2) - 1] = '\0';
+    
+    minus(string1, string2);
+    
+}
+
+
+
+
+
+
+
+
 
 
 
