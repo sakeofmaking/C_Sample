@@ -1,37 +1,45 @@
 /**********************************************************************
- * Title: Fizzbuzz
+ * Title: Triangle of Stars
  *
  * Author: Nic La
  *
- * Purpose: A common interview problem: Write a program that prints the 
- * numbers from 1 to 100. But for multiples of three print “Fizz” instead 
- * of the number and for the multiples of five print “Buzz”. For numbers 
- * which are multiples of both three and five print “FizzBuzz".
+ * Purpose: write an application which will print a triangle of stars of 
+ * user-specified height, with each line having twice as many stars as the 
+ * last. sample output:
+ * @
+ * @@
+ * @@@@
  *
- * Link: http://c2.com/cgi/wiki?FizzBuzzTest
+ * Link: https://www.reddit.com/r/dailyprogrammer/comments/qheeu/342012_challenge_17_easy/
  *
  **********************************************************************/
 
 
 #include <stdio.h>
 
-int main(){
+int main()
+{
+    char line[100];
+    char star = '*';
+    int height = 0;
     int i;
+    int j;
     
-    for(i = 1; i <= 100; i++){
-        if(((i % 3) == 0) && ((i % 5) == 0)){
-            printf("FizzBuzz\n");
-        } else if((i % 3) == 0){
-            printf("Fizz\n");
-        } else if((i % 5) == 0){
-            printf("Buzz\n");
-        } else{
-            printf("%d\n", i);
+    printf("Enter height: ");
+    fgets(line, sizeof(line), stdin);
+    sscanf(line, "%d", &height);
+    
+    for(i = 0; i < height; i++){
+        for(j = 0; j < i + 1; j++){
+            printf("%c", star);
         }
+        printf("\n");
     }
-
-    return(0);
+    
 }
+
+
+
 
 
 
