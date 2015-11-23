@@ -1,41 +1,43 @@
 /**********************************************************************
- * Title: Character Count
+ * Title: Prime Number
  *
  * Author: Nic La
  *
- * Purpose: To count the number of characters inside a text file.
+ * Purpose: To determine if a number entered by the user is a prime number.
  *
  **********************************************************************/
 
 
 #include <stdio.h>
-const char FILE_NAME[] = "/Users/thinklem/Dropbox/Embedded Systems/C_Sample/C_Sample/input.txt";
-#include <stdlib.h>
+#include <string.h>
 
-int main(){
-    int count = 0;          /* number of characters seen */
-    FILE *in_file;          /* input file */
+char line[100];
+int num = 0;
+int i = 0;
+int count = 0;
+int modular = 0;
+
+int main()
+{
+    printf("Enter number in question: ");
+    fgets(line, sizeof(line), stdin);
+    sscanf(line, "%d", &num);
     
-    /* character of EOF flag from input */
-    int ch;
-    
-    in_file = fopen(FILE_NAME, "r");
-    if(in_file == NULL) {
-        printf("Cannot open %s\n", FILE_NAME);
-        exit(8);
-    }
-    
-    while(1){
-        ch = fgetc(in_file);
-        if(ch == EOF){
-            break;
+    if(num <= 1){
+        printf("%d is NOT a prime number\n", num);
+    } else {
+        for(i=2;i<num;i++){
+            modular = num % i;
+            if(modular == 0){
+                printf("%d is NOT a prime number\n", num);
+                count++;
+                break;
+            }
         }
-        ++count;
+        if(count == 0){
+            printf("%d is a prime number\n", num);
+        }
     }
-    printf("Number of characters in %s is %d\n", FILE_NAME, count);
-    
-    fclose(in_file);
-    return(0);
 }
 
 
