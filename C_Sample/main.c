@@ -1,51 +1,79 @@
 /**********************************************************************
- * Title: Permutation
+ * Title: Split List
  *
  * Author: Nic La
  *
- * Purpose: Write a program that will compare two lists, and append any 
- * elements in the second list that doesn't exist in the first.
- * input: ["a","b","c",1,4,], ["a", "x", 34, 4]
- * output: ["a", "b", "c",1,4,"x",34]
+ * Purpose: Input: a list
+ * Output: Return the two halves as different lists.
+ * If the input list has an odd number, the middle item can go to any of the list.
+ * Your task is to write the function that splits a list in two halves.
  *
- * Link: https://www.reddit.com/r/dailyprogrammer/comments/qr0hg/3102012_challenge_22_easy/
+ * Warning: Must use format "element1,element2,element3,etc"
+ *
+ * Link: https://www.reddit.com/r/dailyprogrammer/comments/quli5/3132012_challenge_23_easy/
  *
  **********************************************************************/
-
 
 #include <stdio.h>
 #include <string.h>
 
-const int list_length1 = 5;
-const int list_length2 = 4;
+char string[100];
+char *string_ptr;
 
-char list1[list_length1][10] = {"a", "b", "c", "1", "4"};
-char list2[list_length2][10] = {"a", "x", "34", "4"};
-
-int main()
-{
-    int i, j;
-    int count = 0;
+char *comma_char( char *string_ptr, char comma, int count){
+    int ptr_count = 0;
+    char *first_list_ptr;
     
-    for(i = 0; i < list_length2; i++){
-        for(j = 0; j < list_length1; j++){
-            if(i == 0){
-                printf("[%s]", list1[j]);
+    if(count < 2){
+        count = 1;
+    } else{
+        count /= 2;
+    }
+    
+    for(int i = 0; i < count; i++){
+        while(*string_ptr != comma){
+            if(*string_ptr == '\0'){
+                return(NULL);
             }
-            
-            if(strcmp(list2[i], list1[j]) == 0){
-                count++;
-            }
+            string_ptr++;
+            ptr_count++;
         }
-        if(count == 0){
-            printf("[%s]", list2[i]);
-        }
-        count = 0;
+        string_ptr++;
+        ptr_count++;
     }
     
     
+    //Print first list
+    strncpy(first_list_ptr, string_ptr - ptr_count, ptr_count - 1);
+    printf("[%s]\n", first_list_ptr);
     
+    return(string_ptr);     // Returns pointer to second list
 }
+
+
+
+int main(){
+    int i;
+    int element_count = 1;
+    
+    printf("Enter list: ");
+    fgets(string, sizeof(string), stdin);
+    string[strlen(string) - 1] = '\0';
+    
+    // Function to count ',' to determine number of elements in list
+    for(i = 0; i < strlen(string); i++){
+        if(string[i] == ','){
+            element_count++;
+        }
+    }
+    
+    // Print second list
+    printf("[%s]\n", comma_char(string, ',', element_count));
+ 
+}
+
+
+
 
 
 
