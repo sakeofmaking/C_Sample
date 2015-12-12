@@ -1,75 +1,55 @@
 /**********************************************************************
- * Title: Split List
+ * Title: Majority Wins
  *
  * Author: Nic La
  *
- * Purpose: Input: a list
- * Output: Return the two halves as different lists.
- * If the input list has an odd number, the middle item can go to any of the list.
- * Your task is to write the function that splits a list in two halves.
+ * Purpose: In an election, the person with the majority of the votes is 
+ * the winner. Sometimes due to similar number of votes, there are no winners.
+ * Your challenge is to write a program that determines the winner of a vote, 
+ * or shows that there are no winners due to a lack of majority.
+ * 
+ * Detail: Lack of majority means no 50% of the voters agree on a single candidate
  *
- * Warning: Must use format "element1,element2,element3,etc"
- *
- * Link: https://www.reddit.com/r/dailyprogrammer/comments/quli5/3132012_challenge_23_easy/
+ * Link: https://www.reddit.com/r/dailyprogrammer/comments/qxuug/3152012_challenge_25_easy/
  *
  **********************************************************************/
 
 #include <stdio.h>
-#include <string.h>
-
-char string[100];
-char *string_ptr;
-
-char *comma_char( char *string_ptr, char comma, int count){
-    int ptr_count = 0;
-    char *first_list_ptr;
-    
-    if(count < 2){
-        count = 1;
-    } else{
-        count /= 2;
-    }
-    
-    for(int i = 0; i < count; i++){
-        while(*string_ptr != comma){
-            if(*string_ptr == '\0'){
-                return(NULL);
-            }
-            string_ptr++;
-            ptr_count++;
-        }
-        string_ptr++;
-        ptr_count++;
-    }
-    
-    
-    //Print first list
-    strncpy(first_list_ptr, string_ptr - ptr_count, ptr_count - 1);
-    printf("[%s]\n", first_list_ptr);
-    
-    return(string_ptr);     // Returns pointer to second list
-}
-
-
 
 int main(){
-    int i;
-    int element_count = 1;
+    char line[100];
+    int num_candidates = 0;
+    int indv_votes[100];
+    int total_votes = 0;
+    int winner = 0;
     
-    printf("Enter list: ");
-    fgets(string, sizeof(string), stdin);
-    string[strlen(string) - 1] = '\0';
+    // Ask for number of candidates
+    printf("Enter number of candidates: ");
+    fgets(line, sizeof(line), stdin);
+    sscanf(line, "%d", &num_candidates);
     
-    // Function to count ',' to determine number of elements in list
-    for(i = 0; i < strlen(string); i++){
-        if(string[i] == ','){
-            element_count++;
+    // Ask for number of votes for each candidate
+    for(int i = 1; i <= num_candidates; i++){
+        printf("Enter votes candidate %d received: ", i);
+        fgets(line, sizeof(line), stdin);
+        sscanf(line, "%d", &indv_votes[i]);
+        total_votes += indv_votes[i];
+    }
+    
+    // Determine if any candidate received a majority
+    for(int j = 1; j <= num_candidates; j++){
+        if(indv_votes[j] > (total_votes / 2)){
+            winner = j;
+            break;
         }
     }
     
-    // Print second list
-    printf("[%s]\n", comma_char(string, ',', element_count));
- 
+    // Print the winner
+    if(winner != 0){
+        printf("The winner is candidate %d!\n", winner);
+    } else{
+        printf("There is no winner due to lack of majority\n");
+    }
 }
 
 
