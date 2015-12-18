@@ -1,54 +1,51 @@
 /**********************************************************************
- * Title: Array Duplicates
+ * Title: Palindrome
  *
  * Author: Nic La
  *
- * Purpose: The array duplicates problem is when one integer is in an array 
- * for more than once. If you are given an array with integers between 1 and 
- * 1,000,000 or in some other interval and one integer is in the array twice. 
- * How can you determine which one? Your task is to write code to solve the 
- * challenge.
+ * Purpose: A Palindrome is a sequence that is the same in reverse as it is forward.
+ * I.e. hannah, 12321. Your task is to write a function to determine whether a given 
+ * string is palindromic or not.
  *
- * Note: try to find the most efficient way to solve this challenge.
+ * Bonus: Support multiple lines in your function to validate Demetri Martin's 224 word palindrome poem.
  *
- * Link: https://www.reddit.com/r/dailyprogrammer/comments/r59kk/3202012_challenge_28_easy/
+ * Link: https://www.reddit.com/r/dailyprogrammer/comments/r8a70/3222012_challenge_29_easy/
  *
  **********************************************************************/
 
-#define SIZE 10
-
 #include <stdio.h>
-
+#include <string.h>
+#include <stdbool.h>
 
 int main()
 {
-    int original_list[SIZE] = { 8, 9, 7, 5, 7, 4, 3, 2, 1, 6 };
-    int new_list[SIZE];
-    int i, j, k, m;
+    char line[100];
+    int count = 0;
+    int i;
+    bool palindrome = 0;
     
-    // Store list in new array
-    for(i = 0; i < SIZE; i++){
-        new_list[i] = original_list[i];
-    }
+    printf("Enter string: ");
+    fgets(line, sizeof(line), stdin);
+    line[strlen(line) - 1] = '\0';
     
-    // Sort new array in increasing order
-    for(j = 0; j < SIZE; j++){
-        for(k = 0; k < SIZE; k++){
-            if(new_list[j] < new_list[k]){
-                new_list[j] += new_list[k];
-                new_list[k] = new_list[j] - new_list[k];
-                new_list[j] -= new_list[k];
-            }
+    // Determine if string is palindromic or not
+    count = (int)strlen(line);
+    for(i = 0; i < (strlen(line) / 2); i++){
+        if(line[i] != line[strlen(line) - 1 - i]){
+            palindrome = 0;
+            break;
+        } else{
+            palindrome = 1;
         }
     }
     
-    // Compare adjacent elements
-    // If equal, print duplicates
-    for(m = 0; m < SIZE; m++){
-        if(new_list[m] == new_list[m+1]){
-            printf("[%d]", new_list[m]);
-        }
+    // Display if string is palindromic or not
+    if(palindrome == 1){
+        printf("%s is palindromic\n", line);
+    } else{
+        printf("%s is NOT palindromic\n", line);
     }
+
 }
 
 
