@@ -1,49 +1,40 @@
 /**********************************************************************
- * Title: Palindrome
+ * Title: Target Number
  *
  * Author: Nic La
  *
- * Purpose: A Palindrome is a sequence that is the same in reverse as it is forward.
- * I.e. hannah, 12321. Your task is to write a function to determine whether a given 
- * string is palindromic or not.
+ * Purpose: Write a program that takes a list of integers and a target number 
+ * and determines if any two integers in the list sum to the target number. 
+ * If so, return the two numbers. If not, return an indication that no such 
+ * integers exist.
  *
- * Bonus: Support multiple lines in your function to validate Demetri Martin's 224 word palindrome poem.
- *
- * Link: https://www.reddit.com/r/dailyprogrammer/comments/r8a70/3222012_challenge_29_easy/
+ * Link: https://www.reddit.com/r/dailyprogrammer/comments/reago/3262012_challenge_30_easy/
  *
  **********************************************************************/
 
 #include <stdio.h>
-#include <string.h>
 #include <stdbool.h>
+
+#define SIZE 12
 
 int main()
 {
-    char line[100];
-    int count = 0;
-    int i;
-    bool palindrome = 0;
+    int num_list[SIZE] = { 1, 2, 3, 4, 5, 6, 34, 24, 15, 8, 13, 7 };
+    int target_num = 42;
+    int i, j;
+    bool exist = 0;
     
-    printf("Enter string: ");
-    fgets(line, sizeof(line), stdin);
-    line[strlen(line) - 1] = '\0';
-    
-    // Determine if string is palindromic or not
-    count = (int)strlen(line);
-    for(i = 0; i < (strlen(line) / 2); i++){
-        if(line[i] != line[strlen(line) - 1 - i]){
-            palindrome = 0;
-            break;
-        } else{
-            palindrome = 1;
+    for(i = 0; i < SIZE; i++){
+        for(j = 0; j < SIZE; j++){
+            if(((num_list[i] + num_list[j]) == target_num) && (i != j)){
+                printf("%d, %d\n", num_list[i], num_list[j]);
+                exist = 1;
+            }
         }
     }
     
-    // Display if string is palindromic or not
-    if(palindrome == 1){
-        printf("%s is palindromic\n", line);
-    } else{
-        printf("%s is NOT palindromic\n", line);
+    if(exist == 0){
+        printf("No such integers exist\n");
     }
 
 }
