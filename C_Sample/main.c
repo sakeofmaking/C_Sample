@@ -1,48 +1,74 @@
 /**********************************************************************
- * Title: Two Larger Numbers
+ * Title: Right Triangle
  *
  * Author: Nic La
  *
- * Purpose: A very basic challenge:
- * In this challenge, the
- * input is are : 3 numbers as arguments
- * output: the sum of the squares of the two larger numbers.
+ * Purpose: Write a program that will take a number and print a right 
+ * triangle attempting to use all numbers from 1 to that number.
  *
- * Link: https://www.reddit.com/r/dailyprogrammer/comments/rmmn8/3312012_challenge_34_easy/
+ * Sample Run:
+ * Enter number: 10
+ * Output:
+ * 7 8 9 10
+ * 4 5 6
+ * 2 3
+ * 1
+ * Enter number: 6
+ * Output:
+ * 4 5 6
+ * 2 3
+ * 1
+ * Enter number: 3
+ * Output:
+ * 2 3
+ * 1
+ * Enter number: 12
+ * Output:
+ * 7 8 9 10
+ * 4 5 6
+ * 2 3
+ * 1
+ *
+ * Link: https://www.reddit.com/r/dailyprogrammer/comments/rr4y2/432012_challenge_35_easy/
  *
  **********************************************************************/
-
-// Ask for 3 numbers
-    // Want format "%d %d %d"
-// Identify the two larger numbers
-// (num1 * num1) + (num2 * num2)
 
 #include <stdio.h>
 
 int main(){
     char line[100];
-    int num[3];
-    int i, j;
+    int num = 0;
+    int temp = 1;
+    int i = 2;
+    int j;
     
-    // Accept 3 numbers as arguments
-    printf("Enter 3 numbers: ");
+    // Store input as num
+    printf("Enter number: ");
     fgets(line, sizeof(line), stdin);
-    sscanf(line, "%d %d %d", &num[0], &num[1], &num[2]);
+    sscanf(line, "%d", &num);
     
-    // Identify the two larger numbers
-    // Reorder from largest to smallest
-    for(i = 0; i < 3; i++){
-        for(j = 0; j < 3; j++){
-            if(num[i] > num[j]){
-                num[i] += num[j];
-                num[j] = num[i] - num[j];
-                num[i] -= num[j];
-            }
-        }
+    // Determine highest number within input that satisfies the right triangle
+    while(temp < num){
+        temp += i;
+        i++;
     }
+    if(temp > num){
+        i--;
+        temp -= i;
+    }
+    num = temp;
     
-    // Take the sum of the squares of the two larger numbers
-    printf("num1^2 + num2^2 = %d\n", (num[0] * num[0]) + (num[1] * num[1]));
+    printf("Output:\n");
+    
+    // Print right triangle
+    do{
+        for(j = i - 2; j >= 0; j--){
+            printf("%d ", num - j);
+        }
+        printf("\n");
+        i--;
+        num -= i;
+    } while(num > 0);
     
 }
 
