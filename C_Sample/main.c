@@ -1,75 +1,49 @@
 /**********************************************************************
- * Title: Right Triangle
+ * Title: 1000 Lockers Problem
  *
  * Author: Nic La
  *
- * Purpose: Write a program that will take a number and print a right 
- * triangle attempting to use all numbers from 1 to that number.
+ * Purpose: 1000 Lockers Problem.
+ * In an imaginary high school there exist 1000 lockers labelled 1, 2, ..., 1000.
+ * All of them are closed. 1000 students are to "toggle" a locker's state. 
+ * The first student toggles all of them * The second one toggles every other 
+ * one (i.e, 2, 4, 6, ...) * The third one toggles the multiples of 3 (3, 6, 9, ...) 
+ * and so on until all students have finished.
+ * To toggle means to close the locker if it is open, and to open it if it's closed.
+ * How many and which lockers are open in the end?
  *
- * Sample Run:
- * Enter number: 10
- * Output:
- * 7 8 9 10
- * 4 5 6
- * 2 3
- * 1
- * Enter number: 6
- * Output:
- * 4 5 6
- * 2 3
- * 1
- * Enter number: 3
- * Output:
- * 2 3
- * 1
- * Enter number: 12
- * Output:
- * 7 8 9 10
- * 4 5 6
- * 2 3
- * 1
- *
- * Link: https://www.reddit.com/r/dailyprogrammer/comments/rr4y2/432012_challenge_35_easy/
+ * Link: https://www.reddit.com/r/dailyprogrammer/comments/ruiob/452012_challenge_36_easy/
  *
  **********************************************************************/
 
 #include <stdio.h>
+#include <stdbool.h>
 
 int main(){
-    char line[100];
-    int num = 0;
-    int temp = 1;
-    int i = 2;
-    int j;
+    bool locker[1000];
+    int i, j, k, m;
     
-    // Store input as num
-    printf("Enter number: ");
-    fgets(line, sizeof(line), stdin);
-    sscanf(line, "%d", &num);
-    
-    // Determine highest number within input that satisfies the right triangle
-    while(temp < num){
-        temp += i;
-        i++;
+    // Initialize all lockers to 0 to represent closed
+    for(i = 0; i < 1000; i++){
+        locker[i] = 0;
     }
-    if(temp > num){
-        i--;
-        temp -= i;
-    }
-    num = temp;
     
-    printf("Output:\n");
-    
-    // Print right triangle
-    do{
-        for(j = i - 2; j >= 0; j--){
-            printf("%d ", num - j);
+    // Each student toggles locker multiples of their reprective number
+    for(j = 1; j <= 1000; j++){
+        for(k = 1; k <= 1000; k++){
+            // For multiples of student j, toggle locker k
+            if(k % j == 0){
+                locker[k - 1] = !locker[k - 1];
+            }
         }
-        printf("\n");
-        i--;
-        num -= i;
-    } while(num > 0);
+    }
     
+    // Print open lockers
+    for(m = 0; m < 1000; m++){
+        if(locker[m] == 1){
+            printf("[%d]", m + 1);
+        }
+    }
 }
 
 
