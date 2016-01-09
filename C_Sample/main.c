@@ -1,48 +1,30 @@
 /**********************************************************************
- * Title: FizzBuzz
+ * Title: No Loop
  *
  * Author: Nic La
  *
- * Purpose: You are to write a function that displays the numbers from 1 
- * to an input parameter n, one per line, except that if the current number 
- * is divisible by 3 the function should write “Fizz” instead of the number, 
- * if the current number is divisible by 5 the function should write “Buzz” 
- * instead of the number, and if the current number is divisible by both 3 
- * and 5 the function should write “FizzBuzz” instead of the number.
+ * Purpose: Print the numbers from 1 to 1000 without using any loop or 
+ * conditional statements.
+ * Don’t just write the printf() or cout statement 1000 times.
+ * Be creative and try to find the most efficient way! 
  *
- * For instance, if n is 20, the program should write 1, 2, Fizz, 4, Buzz, 
- * Fizz, 7, 8, Fizz, Buzz, 11, Fizz, 13, 14, FizzBuzz, 16, 17, Fizz, 19, 
- * and Buzz on twenty successive lines. 
- *
- * Link: https://www.reddit.com/r/dailyprogrammer/comments/s6bas/4122012_challenge_39_easy/
+ * Link: https://www.reddit.com/r/dailyprogrammer/comments/schtf/4162012_challenge_40_easy/
  *
  **********************************************************************/
 
 #include <stdio.h>
+#define A printf("%d ", i++);
+#define B A A A A A A A A A A
+#define C B B B B B B B B B B
+#define D C C C C C C C C C C
 
 int main()
 {
-    char line[100];
-    int n = 0;
-    int i;
+    int i = 1;
     
-    printf("Enter number: ");
-    fgets(line, sizeof(line), stdin);
-    sscanf(line, "%d", &n);
+    D
     
-    for(i = 1; i <= n; i++){
-        if(i%3 == 0){
-            printf("Fizz");
-        }
-        if(i%5 == 0){
-            printf("Buzz");
-        }
-        if((i%3 != 0) && (i%5 != 0)){
-            printf("%d", i);
-        }
-        printf("\n");
-    }
-    
+    return(0);
 }
 
 
