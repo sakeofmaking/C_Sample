@@ -22,7 +22,7 @@
 
 int main()
 {
-    char line[100];     
+    char line[100];
     int n = 0;
     int i;
     
