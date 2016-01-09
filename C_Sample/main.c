@@ -22,8 +22,8 @@
 
 int main()
 {
-    char line[100];     // Store input line
-    int n = 0;          // Store input parameter
+    char line[100];     
+    int n = 0;
     int i;
     
     printf("Enter number: ");
