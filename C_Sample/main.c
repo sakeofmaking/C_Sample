@@ -1,50 +1,38 @@
 /**********************************************************************
- * Title: FizzBuzz
+ * Title: ASCII Decoration Banner
  *
  * Author: Nic La
  *
- * Purpose: You are to write a function that displays the numbers from 1
- * to an input parameter n, one per line, except that if the current number
- * is divisible by 3 the function should write “Fizz” instead of the number,
- * if the current number is divisible by 5 the function should write “Buzz”
- * instead of the number, and if the current number is divisible by both 3
- * and 5 the function should write “FizzBuzz” instead of the number.
+ * Purpose: Write a program that will accept a sentence as input and then 
+ * output that sentence surrounded by some type of an ASCII decoratoin banner.
  *
- * For instance, if n is 20, the program should write 1, 2, Fizz, 4, Buzz,
- * Fizz, 7, 8, Fizz, Buzz, 11, Fizz, 13, 14, FizzBuzz, 16, 17, Fizz, 19,
- * and Buzz on twenty successive lines.
- *
- * Link: https://www.reddit.com/r/dailyprogrammer/comments/s6bas/4122012_challenge_39_easy/
+ * Link: https://www.reddit.com/r/dailyprogrammer/comments/shp28/4192012_challenge_41_easy/
  *
  **********************************************************************/
 
 #include <stdio.h>
+#include <string.h>
+
+#define Stars printf("****"); for(i = 0; i < strlen(line); i++){printf("*");}
+#define Buffer printf("\n* "); for(i = 0; i < strlen(line); i++){printf(" ");} printf(" *\n");
 
 int main()
 {
     char line[100];
-    int n = 0;
     int i;
     
-    printf("Enter number: ");
+    printf("Enter sentence: ");
     fgets(line, sizeof(line), stdin);
-    sscanf(line, "%d", &n);
+    line[strlen(line) - 1] = '\0';
     
-    for(i = 1; i <= n; i++){
-        if(i%3 == 0){
-            printf("Fizz");
-        }
-        if(i%5 == 0){
-            printf("Buzz");
-        }
-        if((i%3 != 0) && (i%5 != 0)){
-            printf("%d", i);
-        }
-        printf("\n");
-    }
+    Stars
+    Buffer
+    printf("* %s *", line);
+    Buffer
+    Stars
     
+    return(0);
 }
-
 
 
 
