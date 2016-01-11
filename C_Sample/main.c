@@ -21,9 +21,7 @@
 int main()
 {
     int i = 1;
-    
     D
-    
     return(0);
 }
 
