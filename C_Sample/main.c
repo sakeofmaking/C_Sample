@@ -1,127 +1,63 @@
 /**********************************************************************
- * Title: Checkerboard
+ * Title: Bitstring Population Count
  *
  * Author: Nic La
  *
- * Purpose: Your challenge today is to write a program that can draw a 
- * checkered grid (like a chessboard) to any dimension. For instance, 
- * a 3 by 8 board might look like this:
+ * Prompt: The population count of a bitstring is the number of set bits
+ * (1-bits) in the string. For instance, the population count of the number 
+ * 23, which is represented in binary as 10111 is 4.
+ * Your task is to write a function that determines the population count of 
+ * a number representing a bitstring
  *
- * Prompt: https://www.reddit.com/r/dailyprogrammer/comments/sv6lw/4272012_challenge_45_easy/
+ * Prompt source: https://www.reddit.com/r/dailyprogrammer/comments/szz5y/4302012_challenge_46_easy/
  *
+ * Requirements:
+ * Ask for number
+ *      Convert number to binary (bitstring)
+ * Count number of set bits in bitstring
  **********************************************************************/
 
 #include <stdio.h>
-#include <stdbool.h>
 
-// Function to print empty block
-void empty_block(int index)
+// Convert number to binary string
+// Function adapted from https://blog.udemy.com/c-programs-to-convert-decimal-to-binary/
+int decimal2binary(int decimal)
 {
-    switch(index)
+    int d[20];
+    int i = 0;
+    int count = 0;
+    while(decimal>0)
     {
-        case 0:
-            printf("****");
-            break;
-        case 1:
-            printf("   *");
-            break;
-        case 2:
-            printf("   *");
-            break;
-        case 3:
-            printf("   *");
-            break;
-        case 4:
-            printf("****");
-            break;
+        d[i]=decimal%2;
+        i++;
+        decimal=decimal/2;
     }
-
-}
-
-// Function to print filled block
-void filled_block(int index)
-{
-    switch(index)
+    for(int j=i-1;j>=0;j--)
     {
-        case 0:
-            printf("****");
-            break;
-        case 1:
-            printf("###*");
-            break;
-        case 2:
-            printf("###*");
-            break;
-        case 3:
-            printf("###*");
-            break;
-        case 4:
-            printf("****");
-            break;
+        // Count number of set bits
+        if(d[j] == 1)
+        {
+            count++;
+        }
     }
+    
+    return(count);
 }
 
 int main(void)
 {
     char line[100];
-    int length = 0, height = 0;
-    int i, j;
-    int index = 0;
-    bool block = 0;
-
-    printf("Enter length: ");
-    fgets(line, sizeof(line), stdin);
-    sscanf(line, "%d", &length);
+    int num = 0;
     
-    printf("Enter height: ");
+    // Ask for number
+    printf("Enter number: ");
     fgets(line, sizeof(line), stdin);
-    sscanf(line, "%d", &height);
+    sscanf(line, "%d", &num);
     
-    // Row
-    // 4 * height number or rows + 1
-    for(j = 0; j < ((height*4)+1); j++)
-    {
-        // At the start of each new row
-        printf("*");
-        if(length%2 != 0)
-        {
-            block = !block;
-        }
-        
-        // Block
-        for(i = 0; i < length; i++)
-        {
-            if(block == 0)
-            {
-                // Empty block
-                empty_block(index);
-            } else if(block == 1)
-            {
-                // Filled block
-                filled_block(index);
-            }
-            block = !block;
-        }
-        
-        // Increment to next row
-        printf("\n");
-        if(index != 4)
-        {
-            index++;
-        } else
-        {
-            index = 1;
-            block = !block;
-        }
-
-    }
+    printf("Population count of %d is %d.\n", num, decimal2binary(num));
     
     return(0);
 }
-
-
-
-
 
 
 
