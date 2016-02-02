@@ -1,64 +1,71 @@
 /**********************************************************************
- * Title: Bitstring Population Count
+ * Title: Caesar Cipher
  *
  * Author: Nic La
  *
- * Prompt: The population count of a bitstring is the number of set bits
- * (1-bits) in the string. For instance, the population count of the number 
- * 23, which is represented in binary as 10111 is 4.
- * Your task is to write a function that determines the population count of 
- * a number representing a bitstring
- *
- * Prompt source: https://www.reddit.com/r/dailyprogrammer/comments/szz5y/4302012_challenge_46_easy/
+ * Prompt source: https://www.reddit.com/r/dailyprogrammer/comments/t33vi/522012_challenge_47_easy/
  *
  * Requirements:
- * Ask for number
- *      Convert number to binary (bitstring)
- * Count number of set bits in bitstring
+ * Ask user for text to shift
+ * Ask how much to shift it by
+ *      Range that it can be shifted by 0 - 26
+ * Shift text by amount to shift
  **********************************************************************/
 
 #include <stdio.h>
-
-// Convert number to binary string
-// Function adapted from https://blog.udemy.com/c-programs-to-convert-decimal-to-binary/
-int decimal2binary(int decimal)
-{
-    int d[20];
-    int i = 0;
-    int count = 0;
-    while(decimal>0)
-    {
-        d[i]=decimal%2;
-        i++;
-        decimal=decimal/2;
-    }
-    for(int j=i-1;j>=0;j--)
-    {
-        // Count number of set bits
-        if(d[j] == 1)
-        {
-            count++;
-        }
-    }
-    
-    return(count);
-}
+#include <string.h>
 
 int main(void)
 {
-    char line[100];
-    int num = 0;
+    char line[1000];
+    char text2shift[1000];
+    int shift_amount = 0;
+    int i;
+    int temp = 0;
     
-    // Ask for number
-    printf("Enter number: ");
+    printf("Enter text to code: ");
     fgets(line, sizeof(line), stdin);
-    sscanf(line, "%d", &num);
+    line[strlen(line) - 1] = '\0';
+    strcpy(text2shift, line);
     
-    printf("Population count of %d is %d.\n", num, decimal2binary(num));
+    do
+    {
+        printf("Enter amount to shift text by: ");
+        fgets(line, sizeof(line), stdin);
+        sscanf(line, "%d", &shift_amount);
+    }while(shift_amount < 0 || shift_amount > 26);
+    
+    for(i =0; i < strlen(text2shift); i++)
+    {
+        temp = text2shift[i];
+        
+        // If past Z, wrap around
+        if((temp >= 65) && (temp <= 90))
+        {
+            temp += shift_amount;
+            if(temp > 90)
+            {
+                temp -= 26;
+            }
+        }
+        
+        // If past z, wrap around
+        if((temp >= 97) && (temp <= 122))
+        {
+            temp += shift_amount;
+            if(temp > 122)
+            {
+                temp -= 26;
+            }
+        }
+        
+        text2shift[i] = temp;
+        
+        printf("%c", text2shift[i]);
+    }
     
     return(0);
 }
-
 
 
 
