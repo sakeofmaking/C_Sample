@@ -1,72 +1,68 @@
 /**********************************************************************
- * Title: Caesar Cipher
+ * Title: Separate Even From Odd
  *
  * Author: Nic La
  *
- * Prompt source: https://www.reddit.com/r/dailyprogrammer/comments/t33vi/522012_challenge_47_easy/
+ * Prompt: Take an array of integers and partition it so that all the 
+ * even integers in the array precede all the odd integers in the array. 
+ * Your solution must take linear time in the size of the array and operate 
+ * in-place with only a constant amount of extra space.
+ * Your task is to write the indicated function.
  *
- * Requirements:
- * Ask user for text to shift
- * Ask how much to shift it by
- *      Range that it can be shifted by 0 - 26
- * Shift text by amount to shift
+ * Prompt source: https://www.reddit.com/r/dailyprogrammer/comments/t78m8/542012_challenge_48_easy/
+ *
+ * Note:
+ * Linear time means looping through the array once. In-place means ordering 
+ * the one list as you loop through it and then returning it when done.
+ *
+ * Implementation:
+ * Loop through the array once. If even integer, bring to the front of 
+ * the array and move on to the next integer.
  **********************************************************************/
 
 #include <stdio.h>
-#include <string.h>
+#define SIZE 10
 
 int main(void)
 {
-    char line[1000];
-    char text2shift[1000];
-    int shift_amount = 0;
-    int i;
-    int temp = 0;
+    int integer_array[SIZE] = {43, 85, 28, 48, 57, 10, 53, 27, 90, 34};
+    int i, j, k, m;
+    int temp;
+    int index = 0;
     
-    printf("Enter text to code: ");
-    fgets(line, sizeof(line), stdin);
-    line[strlen(line) - 1] = '\0';
-    strcpy(text2shift, line);
-    
-    do
+    // Print original array
+    printf("Original array: ");
+    for(m = 0; m < SIZE; m++)
     {
-        printf("Enter amount to shift text by: ");
-        fgets(line, sizeof(line), stdin);
-        sscanf(line, "%d", &shift_amount);
-    }while(shift_amount < 0 || shift_amount > 26);
+        printf("[%d]", integer_array[m]);
+    }
     
-    for(i =0; i < strlen(text2shift); i++)
+    // Place even integers in front
+    for(i = 0; i < SIZE; i++)
     {
-        temp = text2shift[i];
-        
-        // If past Z, wrap around
-        if((temp >= 65) && (temp <= 90))
+        if(integer_array[i]%2 == 0)
         {
-            temp += shift_amount;
-            if(temp > 90)
+            temp = integer_array[i];
+            k = i;
+            while(k != index)
             {
-                temp -= 26;
+                integer_array[k] = integer_array[k - 1];
+                k--;
             }
+            integer_array[index] = temp;
+            index++;
         }
-        
-        // If past z, wrap around
-        if((temp >= 97) && (temp <= 122))
-        {
-            temp += shift_amount;
-            if(temp > 122)
-            {
-                temp -= 26;
-            }
-        }
-        
-        text2shift[i] = temp;
-        
-        printf("%c", text2shift[i]);
+    }
+    
+    // Print new array
+    printf("\nNew array:      ");
+    for(j = 0; j < SIZE; j++)
+    {
+        printf("[%d]", integer_array[j]);
     }
     
     return(0);
 }
-
 
 
 
