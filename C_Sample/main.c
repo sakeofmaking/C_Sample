@@ -1,48 +1,70 @@
 /**********************************************************************
- * Title: Store Credit
+ * Title: Alphabet Worth
  *
  * Author: Nic La
  *
- * Prompt source: https://www.reddit.com/r/dailyprogrammer/comments/teua8/592012_challenge_50_easy/
- *
- * Function requirements: INPUT: credit, list array
- *                        OUTPUT: two item positions
+ * Prompt source: https://www.reddit.com/r/dailyprogrammer/comments/tmnfq/5142012_challenge_52_easy/
  *
  **********************************************************************/
 
 #include <stdio.h>
-#include <stdlib.h>
+#include <string.h>
+#define WORDS 6
 
-#define SIZE 8
 
-void position(int credit, int list[SIZE])
+void sort_words(char words_to_sort[WORDS][10])
 {
-    int i, j;
+    int i, j, k, m, n;
+    int sum = 0;
+    int num_array[WORDS];
+    char temp[10];
     
-    for(i = 0; i < SIZE; i++)
+    // Create int array based on word array
+    for(i = 0; i < WORDS; i++)
     {
-        for(j = 0; j < SIZE; j++)
+        for(j = 0; j < strlen(words_to_sort[i]); j++)
         {
-            if((i != j) && (credit == list[i] + list[j]))
+            sum = sum + (words_to_sort[i][j] - 64);
+            if((words_to_sort[i][j] >= 97) && (words_to_sort[i][j] <= 122))
             {
-                printf("%d, %d\n", i + 1, j + 1);
-                exit(8);
+                sum -= 32;
             }
         }
+        num_array[i] = sum;
+        sum = 0;
+    }
+    
+    // Sort word array based on int array
+    for(k = 0; k < WORDS; k++)
+    {
+        for(m = 0; m < WORDS; m++)
+        {
+            if(num_array[k] < num_array[m])
+            {
+                num_array[k] = num_array[k] + num_array[m];
+                num_array[m] = num_array[k] - num_array[m];
+                num_array[k] = num_array[k] - num_array[m];
+                
+                strcpy(temp, words_to_sort[k]);
+                strcpy(words_to_sort[k], words_to_sort[m]);
+                strcpy(words_to_sort[m], temp);
+            }
+        }
+    }
+    
+    // Print word array
+    for(n = 0; n < WORDS; n++)
+    {
+        printf("%s\n", words_to_sort[n]);
     }
     
 }
 
 int main()
 {
-    int credit = 8;
-    int list[SIZE] = {2,1,9,4,4,56,90,3};
+    char words_to_sort[WORDS][10] = {"Shoe", "Hat", "Cat", "Bat", "Pencil", "Coffee"};
     
-    position(credit, list);
+    sort_words(words_to_sort);
     
     return 0;
 }
-
-
-
-
